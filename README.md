@@ -14,8 +14,6 @@
 
 ## 🛡️ Cómo aplicarlo - Protección Perimetral con Salto de IP Fantasma
 
-Esta es la idea que querías implementar, Iván:
-
 **1. Protección perimetral normal:**
 El trafico de internet entra por `eth0 Host 192.168.1.10:8080`, pasa por `DOCKER BRIDGE` y las `REGLAS IPTABLES / FIREWALL (DNAT/FILTER/FORWARD/MASQUERADE)` y llega al contenedor WEB victima.
 
