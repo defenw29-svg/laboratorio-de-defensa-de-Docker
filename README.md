@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/32630029/README.md)
+![README.md](https://github.com/user-attachments/files/32630029/README.md)
 # Lab 02 - Red Perimetral + Ghost Attacker 🛡️
 
 [Arquitectura Perimetral Moderna](diagrama-perimetral-moderno.png)
