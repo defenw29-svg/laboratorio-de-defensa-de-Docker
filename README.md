@@ -1,7 +1,6 @@
-![Arquitectura Perimetral Moderna](diagrama-perimetral-moderno.png)
 # Lab 02 - Red Perimetral + Ghost Attacker 🛡️
 
-[Arquitectura Perimetral Moderna](diagrama-perimetral-moderno.png)
+![Arquitectura Perimetral Moderna](diagrama-perimetral-moderno.png)
 
 > Laboratorio SOC L1 - Red perimetral Docker con IP fantasma rotativa para validar reglas Risk-Based Priority.
 
