@@ -30,22 +30,36 @@ Cuando Wazuh detecta el ataque, ejecuta automáticamente `rotate-ghost-ip.sh` co
 **Para el SOC:** es la prueba de que la correlación de eventos por hostname funciona aunque rote la IP.
 
 ## Despliegue
-```bash
-# 1. Levantar todo
-docker-compose up -d
+# 1. Levantar todo el entorno
+docker compose up -d
+docker ps
 
-# 2. Crear la IP fantasma inicial
+# 2. Crear la IP fantasma inicial - una sola vez
 docker network connect --ip 10.10.20.99 ghost_net ghost-attacker --alias ghost-attacker
+docker network inspect ghost_net | grep -A2 ghost-attacker
 
-# 3. Activar la protección que salta al atacar
-chmod +x rotate-ghost-ip.sh
-./rotate-ghost-ip.sh
-# Dejalo corriendo en segundo plano: nohup ./rotate-ghost-ip.sh &
+# 3. Instalar la defensa activa en Wazuh - NO es nohup
+sudo cp rotate-ghost-ip.sh /var/ossec/active-response/bin/
+sudo chmod 750 /var/ossec/active-response/bin/rotate-ghost-ip.sh
+sudo chown root:wazuh /var/ossec/active-response/bin/rotate-ghost-ip.sh
+sudo systemctl restart wazuh-manager
 
-# 4. Simular ataque para que salte
+# Verificar que Wazuh lo ve:
+# /var/ossec/bin/wazuh-control test config
+
+# 4. Simular ataque CORREGIDO para forzar el salto
+# Esto genera 1x 401 + 12x 404 con el mismo hostname = dispara 100202
 curl http://192.168.1.10:8080/admin -u admin:wrongpass
-# Repetir varias veces -> veras como salta la IP
+for i in {1..12}; do curl -s -o /dev/null http://192.168.1.10:8080/noexiste$i -H "User-Agent: ghost-attacker" -H "X-Forwarded-For: ghost-attacker"; done
+
+# 5. Validar que saltó
+echo "--- IP antes ---"
 docker network inspect ghost_net | grep IPv4Address
+echo "--- Log de Wazuh ---"
+sudo tail -f /var/ossec/logs/alerts/alerts.log | grep 100202
+sudo cat /var/ossec/logs/active-responses.log
+echo "--- IP después ---"
+docker network inspect ghost_net | grep -A2 ghost-attacker
 ```
 
 ## Validacion SOC
