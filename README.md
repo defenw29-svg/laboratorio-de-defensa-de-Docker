@@ -74,6 +74,7 @@ docker network inspect ghost_net | grep -A2 ghost-attacker
 - `docker-compose.yml` - Definición de redes perimetral, soc_interno, ghost_net
 - `rotate-ghost-ip.sh` - Script de salto de IP fantasma (defensa activa)
 - `diagrama-perimetral-moderno.png` - Diagrama de arquitectura
-#
-Autor: Iván Ajenjo Morales | Helpdesk L1/L2 -> Junior SecOps 
+
+***
+##Autor: Iván Ajenjo Morales | Helpdesk L1/L2 -> Junior SecOps 
 License: MIT - Ver LICENCIA / LICENSE - Obligatorio mantener autoría si se copia.
