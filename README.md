@@ -31,7 +31,7 @@ Cuando Wazuh detecta el ataque, ejecuta automáticamente `rotate-ghost-ip.sh` co
 **Para el atacante:** parece que la victima desapareció o cambió de IP (técnica de decepción / honeypot).
 **Para el SOC:** es la prueba de que la correlación de eventos por hostname funciona aunque rote la IP.
 
-## Despliegue
+## Despliegue Técnico
 
 <img width="1920" height="1280" alt="Despliegue técnico" src="https://github.com/user-attachments/assets/b6207d31-3e1e-4287-ab30-10e3f4bf8799" />
 
