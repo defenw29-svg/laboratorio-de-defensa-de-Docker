@@ -69,20 +69,6 @@ docker network inspect ghost_net | grep -A2 ghost-attacker
 #Autor: Iván Ajenjo Morales | Helpdesk L1/L2 -> Junior SecOps 
 License: MIT - Ver LICENCIA / LICENSE - Obligatorio mantener autoría si se copia.
 
-![Trivy](https://img.shields.io/badge/TRIVY-HARDENING-C71B26?style=for-the-badge&logo=aqua&logoColor=white)
-![GitHub Actions](https://img.shields.io/badge/GITHUB%20ACTIONS-SECURITY%20PIPELINE-2088FF?style=for-the-badge&logo=githubactions&logoColor=white)
-![Hardening](https://img.shields.io/badge/HARDENING-CI%2FCD-00C853?style=for-the-badge&logo=linux&logoColor=white)
-![SOC](https://img.shields.io/badge/SOC-L1%20REMEDIATION-FF6F00?style=for-the-badge)
-
-### Stack
-**Contenedores:** Docker Engine 27.2 / Docker Compose v2 / Ubuntu 24.04 LTS Host
-**Perimetral:** Nginx 172.17.0.2:80 (Reverse Proxy) + Postgres/MySQL 172.17.0.3:5432 (Persistent Volume)
-**Red:** Docker Bridge docker0 172.17.0.0/16 + ghost_net 10.10.20.0/24 + IPTables DNAT/FILTER/FORWARD/MASQUERADE
-**Seguridad / SOC:** Wazuh SIEM 4.x (soc_interno) - Monitoreo /var/log/nginx/access.log - Reglas 100201/100202 Risk-Based Priority por hostname
-**Hardening CI/CD:** Trivy (escaneo de vulnerabilidades de imágenes) + GitHub Actions Security Pipeline (Build -> Test -> Scan -> Deploy)
-**Decepción / Defensa Activa:** Ghost Attacker phantom IP 10.10.20.99 -> 10.10.20.100 - Script rotate-ghost-ip.sh + Active Response
-**MITRE ATT&CK:** T1071.001, T1110.001, T1078, T1205
-
 ```
 ## Validacion SOC
 - **Wazuh:** 2 ofensas mismo hostname `ghost-attacker`, IP distinta `10.10.20.99` -> `10.10.20.100`
