@@ -63,8 +63,10 @@ sudo cat /var/ossec/logs/active-responses.log
 echo "--- IP después ---"
 docker network inspect ghost_net | grep -A2 ghost-attacker
 
-```
+#Autor: Iván Ajenjo Morales | Helpdesk L1/L2 -> Junior SecOps 
+License: MIT - Ver LICENCIA / LICENSE - Obligatorio mantener autoría si se copia.
 
+```
 ## Validacion SOC
 - **Wazuh:** 2 ofensas mismo hostname `ghost-attacker`, IP distinta `10.10.20.99` -> `10.10.20.100`
 - **MITRE ATT&CK:** T1110.001 (Brute Force) + T1078 (Valid Accounts) + T1205 (Traffic Signaling)
@@ -74,7 +76,3 @@ docker network inspect ghost_net | grep -A2 ghost-attacker
 - `docker-compose.yml` - Definición de redes perimetral, soc_interno, ghost_net
 - `rotate-ghost-ip.sh` - Script de salto de IP fantasma (defensa activa)
 - `diagrama-perimetral-moderno.png` - Diagrama de arquitectura
-
-***
-##Autor: Iván Ajenjo Morales | Helpdesk L1/L2 -> Junior SecOps 
-License: MIT - Ver LICENCIA / LICENSE - Obligatorio mantener autoría si se copia.
