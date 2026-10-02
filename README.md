@@ -66,6 +66,44 @@ sudo cat /var/ossec/logs/active-responses.log
 echo "--- IP después ---"
 docker network inspect ghost_net | grep -A2 ghost-attacker
 
+## 🛠️ Anexo: Comandos CLI para Despliegue Automatizado (Laboratorio 02)
+
+Para agilizar el despliegue del entorno perimetral y la configuración de la red defensiva/atacante sin realizar configuraciones manuales, copia y ejecuta directamente los siguientes bloques de comandos en la terminal de tu máquina host.
+
+### 💻 1. Levantar el entorno completo de Contenedores:
+```bash
+# Iniciar todos los servicios definidos (Web, DB, Host, Wazuh) en segundo plano
+docker compose up -d
+
+# Verificar el estado de ejecución y puertos asignados de los contenedores
+docker ps
+```
+
+### 💻 2. Aprovisionamiento de la Red e IP Fantasma del Atacante (Solo una vez):
+```bash
+# Conectar el contenedor del atacante asignándole la IP estática simulada dentro de ghost_net
+docker network connect --ip 10.10.20.99 ghost_net ghost-attacker --alias ghost-attacker
+
+# Inspeccionar la red para validar que el direccionamiento y alias se aplicaron correctamente
+docker network inspect ghost_net | grep -A2 ghost-attacker
+```
+
+### 💻 3. Despliegue e Integración de la Defensa Activa en Wazuh:
+```bash
+# Copiar el script de respuesta activa al directorio de ejecución de Wazuh
+sudo cp rotate-ghost-ip.sh /var/ossec/active-response/bin/
+
+# Asignar permisos de ejecución restrictivos al script
+sudo chmod 750 /var/ossec/active-response/bin/rotate-ghost-ip.sh
+
+# Cambiar el propietario del script al usuario y grupo del servicio Wazuh
+sudo chown root:wazuh /var/ossec/active-response/bin/rotate-ghost-ip.sh
+
+# Reiniciar el gestor de Wazuh para aplicar las nuevas directivas de defensa activa
+sudo systemctl restart wazuh-manager
+```
+
+
 #Autor: Iván Ajenjo Morales | Helpdesk L1/L2 -> Junior SecOps 
 License: MIT - Ver LICENCIA / LICENSE - Obligatorio mantener autoría si se copia.
 
