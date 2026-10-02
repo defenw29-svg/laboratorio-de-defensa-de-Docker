@@ -4,6 +4,8 @@
 
 > Laboratorio SOC L1 - Red perimetral Docker con IP fantasma rotativa para validar reglas Risk-Based Priority.
 
+Autor: Iván Ajenjo Morales | Helpdesk L1/L2 -> Junior SecOps 
+
 ## Arquitectura
 - **perimetral**: Open Collector + victima (WEB nginx 172.17.0.2:80 + BBDD Postgres/MySQL 172.17.0.3:5432)
 - **soc_interno (internal)**: Wazuh SIEM
@@ -60,6 +62,7 @@ sudo tail -f /var/ossec/logs/alerts/alerts.log | grep 100202
 sudo cat /var/ossec/logs/active-responses.log
 echo "--- IP después ---"
 docker network inspect ghost_net | grep -A2 ghost-attacker
+
 ```
 
 ## Validacion SOC
@@ -71,6 +74,4 @@ docker network inspect ghost_net | grep -A2 ghost-attacker
 - `docker-compose.yml` - Definición de redes perimetral, soc_interno, ghost_net
 - `rotate-ghost-ip.sh` - Script de salto de IP fantasma (defensa activa)
 - `diagrama-perimetral-moderno.png` - Diagrama de arquitectura
-
-Autor: Iván Ajenjo Morales | Helpdesk L1/L2 -> Junior SecOps | Learning in Public
 License: MIT - Ver LICENCIA / LICENSE - Obligatorio mantener autoría si se copia.
