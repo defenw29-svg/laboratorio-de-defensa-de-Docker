@@ -2,9 +2,42 @@
 
 ![Arquitectura Perimetral Moderna](diagrama-perimetral-moderno.png)
 
+# Lab 02 - Red Perimetral + Ghost Attacker 🛡️
+
+![Docker](https://img.shields.io/badge/Docker-20.10%2B-2496ED?style=for-the-badge&logo=docker&logoColor=white)
+![Wazuh](https://img.shields.io/badge/Wazuh-SIEM-05B3E0?style=for-the-badge&logo=wazuh&logoColor=white)
+![IPTables](https://img.shields.io/badge/IPTables-DNAT%2FFILTER-F05032?style=for-the-badge&logo=linux&logoColor=white)
+![MITRE](https://img.shields.io/badge/MITRE-T1110%2FT1078%2FT1205-FF0000?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Ghost_Attacker_Active-00FF00?style=for-the-badge)
+
+> **Iván Ajenjo Morales | Helpdesk L1/L2 → Junior SecOps**  
 > Laboratorio SOC L1 - Red perimetral Docker con IP fantasma rotativa para validar reglas Risk-Based Priority.
+> **Técnica clave:** Decepción activa + correlación por hostname cuando el atacante rota IP.
+
+## Arquitectura
+
+- **perimetral**: Open Collector + victima (WEB nginx `172.17.0.2:80` + BBDD Postgres/MySQL `172.17.0.3:5432`)
+- **soc_interno (internal)**: Wazuh SIEM
+- **ghost_net**: Ghost Attacker `10.10.20.99` → `10.10.20.100` (IP rotativa)
+
+**Flujo:** `WEB + BBDD -> DOCKER BRIDGE (172.17.0.0/16) -> IPTABLES DNAT/FILTER/FORWARD -> eth0 Host 192.168.1.10:8080 -> GHOST ATTACKER`
+
+## 🛡️ Cómo aplicarlo - Protección Perimetral con Salto de IP Fantasma
+
+**1. Protección perimetral normal:** El tráfico entra por `eth0 Host 192.168.1.10:8080`...
+**2. Detección:** Wazuh monitoriza `/var/log/nginx/access.log` (401, 403, T1110.001)...
+**3. Salto de IP fantasma:** Ejecuta `rotate-ghost-ip.sh` -> Desconecta y reconecta con IP aleatoria `10.10.20.XX`
+
+## 🚀 Despliegue Técnico
+
+### 1. Levantar todo el entorno
+### 2. Crear la IP fantasma inicial - una sola vez
+### 3. Instalar la defensa activa en Wazuh - NO es nohup
+### 4. Simular ataque CORREGIDO para forzar el salto
+### 5. Validar que saltó
 
 
+> Laboratorio SOC L1 - Red perimetral Docker con IP fantasma rotativa para validar reglas Risk-Based Priority.
 
 ## Arquitectura
 - **perimetral**: Open Collector + victima (WEB nginx 172.17.0.2:80 + BBDD Postgres/MySQL 172.17.0.3:5432)
